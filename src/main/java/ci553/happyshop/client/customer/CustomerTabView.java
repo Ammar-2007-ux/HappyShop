@@ -16,28 +16,32 @@ public class CustomerTabView {
     private final CustomerModel model;
     private final DatabaseRW databaseRW;
 
-    private Parent cached; // reuse once built
+    private Parent cached;
 
     public CustomerTabView() {
         this.view = new CustomerView();
-        this.controller = new CustomerController();
         this.model = new CustomerModel();
+        this.controller = new CustomerController(model);
         this.databaseRW = DatabaseRWFactory.createDatabaseRW();
 
-        // Wire exactly like Main does
+        // Wire exactly like CustomerClient does
         view.cusController = controller;
         controller.cusModel = model;
         model.cusView = view;
         model.databaseRW = databaseRW;
     }
 
-    //Builds the UI using a temporary Stage and returns the root node.
+    /**
+     * Builds the UI using a temporary Stage and returns the root node.
+     */
     public Parent getContent() {
         if (cached != null) return cached;
+
         Stage temp = new Stage();
-        view.start(temp);                 // reuse existing startup code
+        view.start(temp);
         cached = temp.getScene().getRoot();
         temp.close();
+
         return cached;
     }
 }
