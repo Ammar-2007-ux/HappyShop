@@ -1,0 +1,10 @@
+Order ID: 1 
+State: Ordered 
+OrderedDateTime: 2026-01-04 10:26:58 
+ProgressingDateTime:  
+CollectedDateTime: 
+Items:
+ 0001    Smart TV           ( 1) £ 499.99
+--------------------------------------------
+ Total                               £ 499.99
+

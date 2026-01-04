@@ -28,8 +28,8 @@ public class WarehouseClient extends Application {
     @Override
     public void start(Stage window) {
         WarehouseView view = new WarehouseView();
-        WarehouseController controller = new WarehouseController();
         WarehouseModel model = new WarehouseModel();
+        WarehouseController controller = new WarehouseController(model);
         DatabaseRW databaseRW = DatabaseRWFactory.createDatabaseRW();
 
         view.controller = controller;

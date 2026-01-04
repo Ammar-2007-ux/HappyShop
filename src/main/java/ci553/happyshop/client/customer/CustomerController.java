@@ -3,31 +3,23 @@ package ci553.happyshop.client.customer;
 import java.io.IOException;
 import java.sql.SQLException;
 
-/**
- * Controller for customer actions.
- * Cleaned up to match current CustomerModel behaviour.
- */
 public class CustomerController {
 
-    // Required by starter wiring
     public CustomerModel cusModel;
 
+    // no-arg constructor
     public CustomerController() {
     }
 
+    // constructor with model
     public CustomerController(CustomerModel model) {
         this.cusModel = model;
     }
 
-    /**
-     * Handles actions triggered by CustomerView buttons.
-     */
+    // 🔧 now DECLARES IOException so CustomerView's try/catch is valid
     public void doAction(String action) throws SQLException, IOException {
 
-        if (cusModel == null) return;
-
         switch (action) {
-
             case "Search":
                 cusModel.searchProduct();
                 break;
@@ -36,19 +28,11 @@ public class CustomerController {
                 cusModel.addToTrolley();
                 break;
 
-            case "Cancel":
-                cusModel.cancelTrolley();
-                break;
-
             case "Check Out":
                 cusModel.checkOut();
                 break;
 
-            case "OK & Close":
-                // No model action needed
-                break;
-
-            default:
+            case "Cancel":
                 break;
         }
     }

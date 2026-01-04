@@ -1,34 +1,29 @@
 package ci553.happyshop.client.warehouse;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 public class WarehouseController {
+
     public WarehouseModel model;
 
-    void process(String action) throws SQLException, IOException {
-        switch (action) {
-            case "🔍":
-                model.doSearch();
-                break;
-            case "Edit":
-                model.doEdit();
-                break;
-            case "Delete":
-                model.doDelete();
-                break;
-            case "➕":
-                model.doChangeStockBy("add");
-                break;
-            case "➖":
-                model.doChangeStockBy("sub");
-                break;
-            case "Submit":
-                model.doSummit();
-                break;
-            case "Cancel":  // clear the editChild
-                model.doCancel();
-                break;
+    public WarehouseController(WarehouseModel model) {
+        this.model = model;
+    }
+
+    public WarehouseController() {}
+
+    public void process(String action) {
+        try {
+            switch (action) {
+
+                case "Search", "🔍" -> model.doSearch();
+                case "Edit" -> model.doEdit();
+                case "Delete" -> model.doDelete();
+                case "Submit" -> model.doSummit();
+                case "Cancel" -> model.doCancel();
+                case "+" -> model.doChangeStockBy("add");
+                case "-" -> model.doChangeStockBy("sub");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

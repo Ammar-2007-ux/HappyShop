@@ -1,14 +1,23 @@
 package ci553.happyshop.client.picker;
 
-import java.io.IOException;
-
+/**
+ * PickerController forwards UI actions to PickerModel.
+ */
 public class PickerController {
+
     public PickerModel pickerModel;
 
-    public void doProgressing() throws IOException {
-        pickerModel.doProgressing();
+    /**
+     * Called when picker clicks "Start Preparing"
+     */
+    public void doProgressing(int orderId) {
+        pickerModel.startPreparing(orderId);
     }
-    public void doCollected() throws IOException {
-        pickerModel.doCollected();
+
+    /**
+     * Called when picker clicks "Mark Collected"
+     */
+    public void doCollected(int orderId) {
+        pickerModel.markCollected(orderId);
     }
 }

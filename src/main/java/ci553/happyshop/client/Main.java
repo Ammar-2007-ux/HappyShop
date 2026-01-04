@@ -10,11 +10,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        // Initialise orders
-        OrderHub.getOrderHub().initializeOrderMap();
+        // Keep JavaFX alive
+        primaryStage.setTitle("Order Tracker Launcher");
+        primaryStage.show();
 
-        // Create Order Tracker window
-        new OrderTracker();   // <-- THIS opens the window
+        // 🔴 CREATE TRACKER FIRST
+        new OrderTracker();
+
+        // 🔴 THEN load orders (this notifies tracker)
+        OrderHub.getOrderHub().initializeOrderMap();
     }
 
     public static void main(String[] args) {

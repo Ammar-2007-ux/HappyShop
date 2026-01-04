@@ -5,7 +5,6 @@ import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.storageAccess.DerbyRW;
 import ci553.happyshop.storageAccess.ImageFileManager;
 import ci553.happyshop.utility.StorageLocation;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;

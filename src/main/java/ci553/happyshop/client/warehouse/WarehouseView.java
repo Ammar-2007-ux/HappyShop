@@ -162,13 +162,7 @@ public class WarehouseView  {
         tfSearchKeyword = new TextField();
         tfSearchKeyword.setStyle(UIStyle.textFiledStyle);
         tfSearchKeyword.setOnAction(actionEvent -> {
-            try {
-                controller.process("🔍");  //pressing enter can also do search
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            controller.process("Search");
         });
         Button btnSearch = new Button("🔍");
         //Button btnSearch = new Button("\uD83D\uDD0D"); // Unicode for 🔍

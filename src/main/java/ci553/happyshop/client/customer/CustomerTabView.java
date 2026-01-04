@@ -21,10 +21,10 @@ public class CustomerTabView {
     public CustomerTabView() {
         this.view = new CustomerView();
         this.model = new CustomerModel();
-        this.controller = new CustomerController(model);
+        this.controller = new CustomerController();   // ✅ no-arg constructor
         this.databaseRW = DatabaseRWFactory.createDatabaseRW();
 
-        // Wire exactly like CustomerClient does
+        // Wire MVC (same as CustomerClient)
         view.cusController = controller;
         controller.cusModel = model;
         model.cusView = view;

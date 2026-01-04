@@ -19,18 +19,21 @@ public class PickerTabView {
         this.controller = new PickerController();
         this.model = new PickerModel();
 
-        view.pickerController = controller;
+        // ✅ CORRECT MVC WIRING
+        view.controller = controller;
+        view.model = model;
+
         controller.pickerModel = model;
-        model.pickerView = view;
-        model.registerWithOrderHub(); // same as Main
     }
 
     public Parent getContent() {
         if (cached != null) return cached;
+
         Stage temp = new Stage();
         view.start(temp);
         cached = temp.getScene().getRoot();
         temp.close();
+
         return cached;
     }
 }
