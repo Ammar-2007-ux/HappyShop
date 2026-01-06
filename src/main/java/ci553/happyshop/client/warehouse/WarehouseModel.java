@@ -39,6 +39,21 @@ public class WarehouseModel {
         Deleted,
         New
     }
+    //  Simulated warehouse stock
+    private static final ArrayList<Product> WAREHOUSE_STOCK = new ArrayList<>();
+
+    static {
+        WAREHOUSE_STOCK.add(new Product("0001", "Smart TV", "imageHolder.jpg", 499.99, 20));
+        WAREHOUSE_STOCK.add(new Product("0002", "Laptop", "imageHolder.jpg", 899.99, 15));
+        WAREHOUSE_STOCK.add(new Product("0003", "Headphones", "imageHolder.jpg", 79.99, 100));
+        WAREHOUSE_STOCK.add(new Product("0004", "Smartphone", "imageHolder.jpg", 699.99, 25));
+        WAREHOUSE_STOCK.add(new Product("0005", "Toaster", "imageHolder.jpg", 29.99, 40));
+        WAREHOUSE_STOCK.add(new Product("0006", "Microwave", "imageHolder.jpg", 119.99, 18));
+        WAREHOUSE_STOCK.add(new Product("0007", "Blender", "imageHolder.jpg", 49.99, 30));
+        WAREHOUSE_STOCK.add(new Product("0008", "Coffee Machine", "imageHolder.jpg", 149.99, 12));
+        WAREHOUSE_STOCK.add(new Product("0009", "Vacuum Cleaner", "imageHolder.jpg", 199.99, 10));
+        WAREHOUSE_STOCK.add(new Product("0010", "Air Fryer", "imageHolder.jpg", 129.99, 22));
+    }
 
     private enum UpdateForAction{
         //actions in Search Page
@@ -59,15 +74,22 @@ public class WarehouseModel {
         ShowInputErrorMsg
     }
 
-    void doSearch() throws SQLException {
+    void doSearch() {
         String keyword = view.tfSearchKeyword.getText().trim();
-        if (!keyword.equals("")) {
-            productList = databaseRW.searchProduct(keyword);
+        productList.clear();
+
+        if (keyword.isEmpty()) {
+            updateView(UpdateForAction.BtnSearch);
+            return;
         }
-        else{
-            productList.clear();
-            System.out.println("please type product ID or name to search");
+
+        for (Product p : WAREHOUSE_STOCK) {
+            if (p.getProductId().equalsIgnoreCase(keyword)) {
+                productList.add(p);
+                break;
+            }
         }
+
         updateView(UpdateForAction.BtnSearch);
     }
 

@@ -1,28 +1,51 @@
 package ci553.happyshop.client.warehouse;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class WarehouseController {
 
     public WarehouseModel model;
 
-    public WarehouseController(WarehouseModel model) {
-        this.model = model;
-    }
-
-    public WarehouseController() {}
-
     public void process(String action) {
+
         try {
             switch (action) {
 
-                case "Search", "🔍" -> model.doSearch();
-                case "Edit" -> model.doEdit();
-                case "Delete" -> model.doDelete();
-                case "Submit" -> model.doSummit();
-                case "Cancel" -> model.doCancel();
-                case "+" -> model.doChangeStockBy("add");
-                case "-" -> model.doChangeStockBy("sub");
+                case "Search":
+                case "🔍":
+                    model.doSearch();
+                    break;
+
+                case "Edit":
+                    model.doEdit();
+                    break;
+
+                case "Delete":
+                    model.doDelete();
+                    break;
+
+                case "Submit":
+                    model.doSummit();
+                    break;
+
+                case "Cancel":
+                    model.doCancel();
+                    break;
+
+                case "+":
+                    model.doChangeStockBy("add");
+                    break;
+
+                case "-":
+                    model.doChangeStockBy("sub");
+                    break;
+
+                default:
+                    System.out.println("Unknown action: " + action);
             }
-        } catch (Exception e) {
+
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
