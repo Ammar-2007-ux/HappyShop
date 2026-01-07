@@ -255,41 +255,31 @@ public class DerbyRW implements DatabaseRW {
     }
 
 //warehouse delete an existing product
-    public void deleteProduct(String proId) throws SQLException {
-        lock.lock();
-        String selectSql = "SELECT * FROM ProductTable WHERE productID = ?";
-        String deleteSql = "DELETE FROM ProductTable WHERE productID = ?";
+public void deleteProduct(String proId) throws SQLException {
+    lock.lock();
 
-        try (Connection conn = DriverManager.getConnection(dbURL);
-             PreparedStatement selectStmt = conn.prepareStatement(selectSql);
-             PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
-            conn.setAutoCommit(true); // Set auto-commit to true immediately
+    String deleteSql =
+            "DELETE FROM ProductTable WHERE TRIM(productID) = ?";
 
-            // print product details before deletion
-            selectStmt.setString(1, proId);
-            try (ResultSet rs = selectStmt.executeQuery()) {
-                if (rs.next()) {
-                    System.out.println("Before delete:");
-                    System.out.println("ID: " + rs.getString("productID"));
-                    System.out.println("Description: " + rs.getString("description"));
-                    System.out.println("Unit Price: " + rs.getDouble("unitPrice"));
-                    System.out.println("Stock: " + rs.getInt("inStock"));
-                } else {
-                    System.out.println("Product not found: " + proId);
-                    return; // Exit if product does not exist
-                }
-            }
+    try (Connection conn = DriverManager.getConnection(dbURL);
+         PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
 
-            // delete from database
-            deleteStmt.setString(1, proId);
-            deleteStmt.executeUpdate();
-            System.out.println("Product " + proId + " deleted from database.");
+        deleteStmt.setString(1, proId.trim());
+
+        int rows = deleteStmt.executeUpdate();
+
+        System.out.println("DELETE rows affected = " + rows);
+
+        if (rows == 0) {
+            System.out.println("⚠️ No product deleted — ID not matched");
+        } else {
+            System.out.println("✅ Product " + proId + " deleted");
         }
 
-        finally {
-            lock.unlock(); // Always release the lock after the operation
-        }
+    } finally {
+        lock.unlock();
     }
+}
 
     //check if product ID is unique
     //warehouse tries to add a new prodcut, id must be unique

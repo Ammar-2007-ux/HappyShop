@@ -3,6 +3,9 @@ package ci553.happyshop.client.warehouse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Handles user actions from WarehouseView and delegates logic to WarehouseModel.
+ */
 public class WarehouseController {
 
     public WarehouseModel model;
@@ -18,10 +21,18 @@ public class WarehouseController {
                     break;
 
                 case "Edit":
+                    if (model.view.obrLvProducts.getSelectionModel().getSelectedItem() == null) {
+                        System.out.println("No product selected for edit");
+                        return;
+                    }
                     model.doEdit();
                     break;
 
                 case "Delete":
+                    if (model.view.obrLvProducts.getSelectionModel().getSelectedItem() == null) {
+                        System.out.println("No product selected for delete");
+                        return;
+                    }
                     model.doDelete();
                     break;
 
@@ -33,10 +44,12 @@ public class WarehouseController {
                     model.doCancel();
                     break;
 
+                case "➕":
                 case "+":
                     model.doChangeStockBy("add");
                     break;
 
+                case "➖":
                 case "-":
                     model.doChangeStockBy("sub");
                     break;

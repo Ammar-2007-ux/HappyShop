@@ -124,7 +124,7 @@ public class OrderHub {
         notifyPickerModels();
     }
 
-    // ===================== 🔴 FIXED METHOD =====================
+
 
     /**
      * Used ONLY by Picker to read order details.

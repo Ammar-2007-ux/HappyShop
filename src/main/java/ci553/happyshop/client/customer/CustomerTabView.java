@@ -21,7 +21,7 @@ public class CustomerTabView {
     public CustomerTabView() {
         this.view = new CustomerView();
         this.model = new CustomerModel();
-        this.controller = new CustomerController();   // ✅ no-arg constructor
+        this.controller = new CustomerController();   //  no-arg constructor
         this.databaseRW = DatabaseRWFactory.createDatabaseRW();
 
         // Wire MVC (same as CustomerClient)

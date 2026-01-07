@@ -26,13 +26,23 @@ public class WarehouseClient extends Application {
         // Create database access
         DatabaseRW databaseRW = DatabaseRWFactory.createDatabaseRW();
 
-        //  WIRE MVC PROPERLY
+        // Wire MVC
         view.controller = controller;
         controller.model = model;
         model.view = view;
         model.databaseRW = databaseRW;
 
-        // Start UI
+
         view.start(window);
+
+
+        HistoryWindow historyWindow = new HistoryWindow();
+        AlertSimulator alertSimulator = new AlertSimulator();
+
+        model.historyWindow = historyWindow;
+        model.alertSimulator = alertSimulator;
+
+        historyWindow.warehouseView = view;
+        alertSimulator.warehouseView = view;
     }
 }

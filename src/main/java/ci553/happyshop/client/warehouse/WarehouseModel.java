@@ -14,9 +14,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class WarehouseModel {
+
     public WarehouseView view;
     public DatabaseRW databaseRW; //Interface type, not specific implementation
                          //Benefits: Flexibility: Easily change the database implementation.
+
+                         private static final ArrayList<Product> UI_WAREHOUSE_STOCK = new ArrayList<>();
+
+    static {
+        UI_WAREHOUSE_STOCK.add(new Product("0001", "Smart TV", null, 499.99, 10));
+        UI_WAREHOUSE_STOCK.add(new Product("0002", "Laptop", null, 899.99, 5));
+        UI_WAREHOUSE_STOCK.add(new Product("0003", "Headphones", null, 79.99, 20));
+        UI_WAREHOUSE_STOCK.add(new Product("0004", "Smartphone", null, 699.99, 15));
+        UI_WAREHOUSE_STOCK.add(new Product("0005", "Toaster", null, 29.99, 30));
+        UI_WAREHOUSE_STOCK.add(new Product("0006", "Microwave", null, 119.99, 8));
+        UI_WAREHOUSE_STOCK.add(new Product("0007", "Blender", null, 49.99, 12));
+        UI_WAREHOUSE_STOCK.add(new Product("0008", "Coffee Machine", null, 149.99, 7));
+        UI_WAREHOUSE_STOCK.add(new Product("0009", "Vacuum Cleaner", null, 199.99, 6));
+        UI_WAREHOUSE_STOCK.add(new Product("0010", "Air Fryer", null, 129.99, 9));
+    }
 
     private ArrayList<Product> productList = new ArrayList<>(); // search results fetched from the database
     private Product theSelectedPro; // the product selected from the ListView before the user edits or deletes
@@ -83,36 +99,34 @@ public class WarehouseModel {
             return;
         }
 
-        for (Product p : WAREHOUSE_STOCK) {
-            if (p.getProductId().equalsIgnoreCase(keyword)) {
+        for (Product p : UI_WAREHOUSE_STOCK) {
+            if (p.getProductId().equals(keyword)
+                    || p.getProductDescription().toLowerCase().contains(keyword.toLowerCase())) {
                 productList.add(p);
-                break;
             }
         }
 
         updateView(UpdateForAction.BtnSearch);
     }
 
-    void doDelete() throws SQLException, IOException {
-        System.out.println("delete gets called in model");
-        Product pro  = view.obrLvProducts.getSelectionModel().getSelectedItem();
-        if (pro != null ) {
-            theSelectedPro = pro;
-            productList.remove(theSelectedPro); //remove the product from product List
 
-            //update databse: delete the product from database
-            databaseRW.deleteProduct(theSelectedPro.getProductId());
+    void doDelete() {
+        Product selected = view.obrLvProducts
+                .getSelectionModel()
+                .getSelectedItem();
 
-            //delete the image from imageFolder "images/"
-            String imageName = theSelectedPro.getProductImageName(); //eg 0011.jpg;
-            ImageFileManager.deleteImageFile(StorageLocation.imageFolder, imageName);
-
-            updateView(UpdateForAction.BtnDelete);
-            theSelectedPro = null;
+        if (selected == null) {
+            System.out.println("No product selected");
+            return;
         }
-        else{
-            System.out.println("No product was selected");
-        }
+
+        System.out.println("Deleting product ID = " + selected.getProductId());
+
+        // remove from UI stock
+        UI_WAREHOUSE_STOCK.remove(selected);
+        productList.remove(selected);
+
+        updateView(UpdateForAction.BtnDelete);
     }
 
     void doEdit() {

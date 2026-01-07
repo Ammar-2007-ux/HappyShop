@@ -483,20 +483,12 @@ public class WarehouseView {
 
         controller.process(action);
 
-        //only when user click btnEidt and a product was selected, enable editable field of editChild
-        if (action.equals("Edit") && obrLvProducts.getSelectionModel().getSelectedItem() != null) {
-            disableEditProductChild(false); //a product was selected, enable editChild
-            cbProductFormMode.setValue("Edit Existing Product in Stock"); //show EditChild
+        if (action.equals("Edit") &&
+                obrLvProducts.getSelectionModel().getSelectedItem() != null) {
+            disableEditProductChild(false);
+            cbProductFormMode.setValue("Edit Existing Product in Stock");
         }
-
-        try {
-            controller.process(action);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
     }
-
     private void imageChooser(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
